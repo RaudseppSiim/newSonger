@@ -7,7 +7,7 @@ import { connect } from 'net';
 
 @WebSocketGateway()
 export class VideosGateway {
-    @WebSocketGateway() server;
+    @WebSocketServer() server;
     constructor(private readonly rooms: RoomsService, private readonly videos: VideosService){}
 
     @SubscribeMessage('connected')
@@ -21,7 +21,7 @@ export class VideosGateway {
 
         if(room) {
             room.currentVideo.paused = false
-            return this.broadcastUpdate(client, room)
+            return this.broadcastChannel(client, room)
         }
         return {success: false}
     }
@@ -32,7 +32,7 @@ export class VideosGateway {
 
         if(room) {
             room.currentVideo.paused = true
-            this.broadcastUpdate(client, room)
+            this.broadcastChannel(client, room)
         }
     }
 
@@ -61,6 +61,15 @@ export class VideosGateway {
         console.log('broadcast', room)
 
         return {room, success: true}
+    }
+
+    broadcastChannel(channel: String, room: Room) {
+        this.server.emit(channel, room);
+
+        console.log('broadcast', room)
+
+        return {room, success: true}
+        
     }
 
 }

@@ -3,7 +3,7 @@ import Youtube from 'react-youtube'
 
 import io from 'socket.io-client';
 
-var socket = io('http://localhost:8000');
+var socket = io.connect('http://localhost:8000');
 
 class App extends Component {
 
@@ -50,17 +50,16 @@ class App extends Component {
 
       this.socket = socket
       console.log('Socket connected')
-      socket.emit('connected');
     })
   }z
 
-  startVideo = async () => {
+  startVideo = async (event) => {
     const socket = await this.getSocket()
-    
+
     socket.emit('start', this.getRoom().id)
   }
 
-  pauseVideo = async () => {
+  pauseVideo = async (event) => {
     const socket = await this.getSocket()
     
     socket.emit('pause', this.getRoom().id)

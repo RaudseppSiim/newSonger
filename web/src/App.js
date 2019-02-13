@@ -14,12 +14,12 @@ class App extends Component {
     opts: {
       playerVars: {
         modestbranding: 1,
-        autoplay: 0
+        autoplay: 1
       }
     }
   }
   socket = null;
-  event = null;
+  
 
   getRoom = () => {
     return new Promise(resolve => {
@@ -59,9 +59,8 @@ class App extends Component {
         this.event.target.pauseVideo();
     })
     socket.on('start',async (socket) => {
-      console.log('Socket start'+this.event.data)
     if(this.event.data !== 1)
-      this.event.target.startVideo();
+      this.event.target.playVideo();
     })
   }
 
@@ -69,6 +68,7 @@ class App extends Component {
     console.log("start");
     const socket = await this.getSocket()
     const roomId = await this.getRoom()
+    this.event = null;
     this.event = event
     socket.emit('start', await roomId.id)
   }
@@ -77,6 +77,7 @@ class App extends Component {
     const socket = await this.getSocket()
     const roomId = await this.getRoom()
     console.log(roomId.id)
+    this.event = null;
     this.event = event
     socket.emit('pause',roomId.id)
   }

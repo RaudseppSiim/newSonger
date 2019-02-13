@@ -62,6 +62,16 @@ class App extends Component {
     if(this.event.data !== 1)
       this.event.target.playVideo();
     })
+    socket.on('next', async (socket) => {
+      if(this.event.data !== 1)
+      this.event.target.loadVideoById();
+      this.event.target.playVideo();
+    })
+    socket.on('seek', async (socket) => {
+      console.log(socket)
+      if(this.event.data !== 1)
+        this.event.target.seekTo(socket[1]);
+    })
   }
 
   startVideo = async (event) => {
@@ -70,7 +80,9 @@ class App extends Component {
     const roomId = await this.getRoom()
     this.event = null;
     this.event = event
-    socket.emit('start', await roomId.id)
+    var positsion = event.target.getCurrentTime() 
+    socket.emit('start', roomId.id)
+    socket.emit('seek', [roomId.id, positsion])
   }
 
   pauseVideo = async (event) => {

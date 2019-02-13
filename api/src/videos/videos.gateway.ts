@@ -29,7 +29,6 @@ export class VideosGateway {
     @SubscribeMessage('pause')
     onPauseVideo(client: any, roomId: string){
         const room = this.rooms.getRoom(roomId)
-        console.log(room)
         if(room) {
             room.currentVideo.paused = true
             this.broadcastChannel('pause', room)
@@ -37,12 +36,14 @@ export class VideosGateway {
     }
 
     @SubscribeMessage('seek')
-    onSeekVideo(client: any, {roomId, position}: {roomId: string, position: number}){
-        const room = this.rooms.getRoom(roomId)
-
+    onSeekVideo(client: any, data:any){
+        console.log(data)
+        const room = this.rooms.getRoom(data[0])
+        console.log(data[1]);
         if(room) {
-            this.videos.setVideoPosition(room, room.currentVideo.id, position)
-            this.broadcastUpdate(client, room)
+            
+            let positsion = this.videos.setVideoPosition(room, room.currentVideo.id, data[1])
+            this.broadcastChannel('seek', [room,positsion])
         }
     }
 
@@ -52,21 +53,18 @@ export class VideosGateway {
 
         if(room) {
             this.videos.startNextVideo(room)
-            this.broadcastUpdate('next', room)
+            this.broadcastChannel('next', room)
         }
     }
 
     broadcastUpdate(client: any, room: Room) {
         client.broadcast.emit({ room })
-        console.log('broadcast', room)
-
+        
         return {room, success: true}
     }
 
-    broadcastChannel(channel: String, room: Room) {
+    broadcastChannel(channel: String, room: any) {
         this.server.emit(channel, room);
-
-        console.log('broadcast', room)
 
         return {room, success: true}
         

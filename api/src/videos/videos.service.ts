@@ -37,10 +37,12 @@ export class VideosService {
     }
 
     setVideoPosition(room: Room, videoId: string, position: number) {
-        const video = this.getVideo(room, videoId)
+        const video = this.getVideo(room, videoId)  
+        console.log(video)
 
         if (video) {
             video.position = position
+            return position;
         }
     }
 

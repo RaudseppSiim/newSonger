@@ -4,20 +4,22 @@ import Youtube from 'react-youtube'
 import io from 'socket.io-client';
 
 var socket = io.connect('http://localhost:8000');
-
+var event;
+console.log(socket)
 class App extends Component {
 
   state = {
+    status:true,
     room: null,
     opts: {
       playerVars: {
         modestbranding: 1,
-        autoplay: 1
+        autoplay: 0
       }
     }
   }
-
   socket = null;
+  event = null;
 
   getRoom = () => {
     return new Promise(resolve => {
@@ -34,9 +36,10 @@ class App extends Component {
   getSocket = () => {
     return new Promise(resolve => {
       let i = setInterval(() => {
-        if (this.socket) {
+        console.log(socket)
+        if (socket) {
           clearInterval(i)
-          resolve(this.socket)
+          resolve(socket)
         }
       }, 300);
     })
@@ -51,24 +54,37 @@ class App extends Component {
       this.socket = socket
       console.log('Socket connected')
     })
-  }z
+    socket.on('pause',async (socket) => {
+      if(this.event.data !== 2)
+        this.event.target.pauseVideo();
+    })
+    socket.on('start',async (socket) => {
+      console.log('Socket start'+this.event.data)
+    if(this.event.data !== 1)
+      this.event.target.startVideo();
+    })
+  }
 
   startVideo = async (event) => {
+    console.log("start");
     const socket = await this.getSocket()
-
-    socket.emit('start', this.getRoom().id)
+    const roomId = await this.getRoom()
+    this.event = event
+    socket.emit('start', await roomId.id)
   }
 
   pauseVideo = async (event) => {
     const socket = await this.getSocket()
-    
-    socket.emit('pause', this.getRoom().id)
+    const roomId = await this.getRoom()
+    console.log(roomId.id)
+    this.event = event
+    socket.emit('pause',roomId.id)
   }
 
   next = async () => {
     const socket = await this.getSocket()
-    
-    socket.emit('next', this.getRoom().id);
+    const roomId = await this.getRoom()
+    socket.emit('next', roomId.id);
   }
 
   render() {
@@ -76,7 +92,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        {room && room.currentVideo && (
+        {room && room.currentVideo &&(
           <Youtube
             videoId={room.currentVideo.id}
             onReady={this.onReady}

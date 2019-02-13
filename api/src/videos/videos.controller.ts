@@ -13,6 +13,7 @@ export class VideosController {
         private readonly videos: VideosService,
     ) { }
 
+
     @Get('/:roomId/videos')
     listVideos(roomId: string): Response<Video[]> {
         const room = this.rooms.getRoom(roomId)

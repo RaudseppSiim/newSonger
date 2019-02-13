@@ -23,7 +23,10 @@ export class RoomsService {
     }
 
     getRoom(roomId: string): Room {
+        console.log(roomId)
+        console.log(this.rooms);
         return this.rooms.get(roomId)
+
     }
 
     createRoom(name: string, queue: string[]): Room {

@@ -21,7 +21,7 @@ export class VideosGateway {
 
         if(room) {
             room.currentVideo.paused = false
-            return this.broadcastChannel(client, room)
+            return this.broadcastChannel('start', room)
         }
         return {success: false}
     }
@@ -29,10 +29,10 @@ export class VideosGateway {
     @SubscribeMessage('pause')
     onPauseVideo(client: any, roomId: string){
         const room = this.rooms.getRoom(roomId)
-
+        console.log(room)
         if(room) {
             room.currentVideo.paused = true
-            this.broadcastChannel(client, room)
+            this.broadcastChannel('pause', room)
         }
     }
 
@@ -52,7 +52,7 @@ export class VideosGateway {
 
         if(room) {
             this.videos.startNextVideo(room)
-            this.broadcastUpdate(client, room)
+            this.broadcastUpdate('next', room)
         }
     }
 

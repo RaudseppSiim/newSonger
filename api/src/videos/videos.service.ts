@@ -12,7 +12,7 @@ export class VideosService {
     }
 
     getVideo(room: Room, videoId: string): Video {
-        return find(room.videoQueue, { id: videoId })
+        return find(room.videoQueue, ['id', videoId] )
     }
 
     addVideoToQueue(room: Room, videoId: string): Video {
@@ -32,13 +32,15 @@ export class VideosService {
     }
 
     startNextVideo(room: Room) {
+        console.log(room.videoQueue)
         room.currentVideo = room.videoQueue.shift()
+        console.log(room.currentVideo)
         room.currentVideo.paused = false
     }
 
     setVideoPosition(room: Room, videoId: string, position: number) {
         const video = this.getVideo(room, videoId)  
-        console.log(video)
+        console.log(videoId)
 
         if (video) {
             video.position = position

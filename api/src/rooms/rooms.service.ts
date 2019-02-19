@@ -11,7 +11,7 @@ export class RoomsService {
     constructor() {
         each(
             [
-                this.createRoom('Trending-ish', ["Px_KohohYT8", "jGfcXvrt8sc", "MudzY4dKEYk"]),
+                this.createRoom('Trending-ish', ["irlW_65xkFo", "2O5euYPzcrY", "lcg6wekmCRA"]),
                 this.createRoom('Pewds', ["tQeBRMp4S7s", "RzQYEsL4MtM", "b_gitOw1TZU"])
             ],
             (room: Room) => this.rooms.set(room.id, room)

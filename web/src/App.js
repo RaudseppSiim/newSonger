@@ -80,9 +80,9 @@ class App extends Component {
     const roomId = await this.getRoom()
     this.event = null;
     this.event = event
-    var positsion = event.target.getCurrentTime() 
+    var positsion = event.target.getCurrentTime()
+    socket.emit('seek', [roomId.id, positsion]) 
     socket.emit('start', roomId.id)
-    socket.emit('seek', [roomId.id, positsion])
   }
 
   pauseVideo = async (event) => {
@@ -91,6 +91,8 @@ class App extends Component {
     console.log(roomId.id)
     this.event = null;
     this.event = event
+    // var positsion = event.target.getCurrentTime() 
+    // socket.emit('seek', [roomId.id, positsion])
     socket.emit('pause',roomId.id)
   }
 
@@ -99,6 +101,14 @@ class App extends Component {
     const roomId = await this.getRoom()
     socket.emit('next', roomId.id);
   }
+  // seekVideo = async (event) => {
+  //   const socket = await this.getSocket()
+  //   const roomId = await this.getRoom()
+  //   this.event = null;
+  //   this.event = event
+  //   var positsion = event.target.getCurrentTime() 
+  //   socket.emit('seek', [roomId.id, positsion])
+  // }
 
   render() {
     const { opts, room } = this.state
@@ -112,6 +122,7 @@ class App extends Component {
             opts={opts}
             onPlay={this.startVideo}
             onPause={this.pauseVideo}
+            //onStateChange={this.seekVideo}
             onEnd={this.next}
           />
         )}

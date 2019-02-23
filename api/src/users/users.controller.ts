@@ -16,9 +16,9 @@ export class UsersController {
         return { payload: users }
     }
 
-    @Get('/:roomId')
-    getUser(@Param('roomId') roomId: string): Response<User> {
-        const user = this.users.getUser(roomId)
+    @Get('/:userId')
+    getUser(@Param('userId') userId: string): Response<User> {
+        const user = this.users.getUser(userId)
 
         if (user) {
             return { payload: user }
@@ -28,8 +28,9 @@ export class UsersController {
     }
 
     @Post('/:roomId/create')
-    createUser(@Body() data: { name: string, room:Room }): Response<User> {
-        const user = this.users.createUser(data.name, data.room)
+    createUser(@Param('roomId') roomId:string,@Body() data: { name: string}): Response<User> {
+        console.log(data)
+        const user = this.users.createUser(data.name, roomId)
 
         return { payload: user }
     }

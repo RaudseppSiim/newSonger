@@ -16,16 +16,17 @@ export class UsersService {
         return [...this.users.values()]
     }
 
-    getUser(roomId: string): User {
-        return this.users.get(roomId)
+    getUser(userId: string): User {
+        return this.users.get(userId)
 
     }
-    createUser(name:string, room:Room): User {
+    createUser(name:string, roomId:string): User {
         const user: User = {
             id: random(0, 1024 ^ 2).toString(16),
             name,
-            room: room.id
+            room: roomId
         }        
+        this.users.set(user.id,user)
         return user
     }
 

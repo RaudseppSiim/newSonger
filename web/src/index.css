@@ -30,7 +30,7 @@ code {
   /* background-size: contain; */
   background-repeat: repeat;
   transform: scale(2) translate(25%, 25%);
-  animation: backgroundAnimation 100s ease-out infinite;
+  animation: backgroundAnimation 100s linear infinite;
 }
 .frontpage-container{
   display: flex;

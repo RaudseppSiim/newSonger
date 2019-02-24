@@ -5,6 +5,7 @@ import FrontPage from './FrontPageComponent/frontpage'
 import ChatForm from './BodyComponent/chatForm'
 
 import io from 'socket.io-client';
+import Secondpage from './secondPage/secondPage';
 
 
 
@@ -13,16 +14,22 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message:""
+      start:false,
+      mode:""
     };
-
-    
+  }
+  handleStart = (startMode) => {
+    this.setState({
+      start:true,
+      mode:startMode
+    })
   }
 
 render(){
   return(
     <div>
-        <ChatForm></ChatForm>
+      {this.state.start==false && <FrontPage onStart={this.handleStart}></FrontPage>}
+      {this.state.start==true && <Secondpage></Secondpage>}
     </div>
     )
 

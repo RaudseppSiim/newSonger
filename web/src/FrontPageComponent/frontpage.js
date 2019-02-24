@@ -6,9 +6,18 @@ var socket = io.connect('http://localhost:8000');
 
 
 class Frontpage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    
+  }
 
-clickHandle = () =>{
-  alert('click');
+clickHandleCreate = () =>{
+  this.props.onStart("Create");
+}
+
+clickHandleCreate = () =>{
+  this.props.onStart("Join");
 }
 
 render(){
@@ -19,8 +28,8 @@ render(){
           <h3>Songer</h3>
         </div>
         <div className="buttons-container">
-            <div className="button" onClick={this.clickHandle}>Create Room</div>
-            <div className="button"onClick={this.clickHandle}>Join Room</div>
+            <div className="button" onClick={this.clickHandleCreate}>Create Room</div>
+            <div className="button"onClick={this.clickHandleJoin}>Join Room</div>
         </div>
       </div>
       <div className="background">

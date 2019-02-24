@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import io from 'socket.io-client';
-
-var socket = io.connect('http://localhost:8000');
+import Signinform from '../BodyComponent/signinform';
+import ChatForm from '../BodyComponent/chatForm';
+import YouTube from '../BodyComponent/youtube';
 
 
 class Secondpage extends Component {
@@ -14,7 +15,13 @@ clickHandle = () =>{
 render(){
   return(
     <div>
-      <div></div>
+      <div className="OverlayLogin">
+        <Signinform></Signinform>
+      </div>
+      <div className="main-container">
+        <ChatForm></ChatForm>
+        <YouTube></YouTube>
+      </div>
     </div>
     )
   }

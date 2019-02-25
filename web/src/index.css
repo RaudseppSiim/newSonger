@@ -14,6 +14,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #020100;
   overflow: hidden;
+  color: #F3EFF5;
 }
 
 code {
@@ -97,4 +98,33 @@ code {
   padding: 0 14px;
   display: flex;
   align-items: center;
+}
+.OverlayLogin{
+  top:0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6)
+}
+.OverlayLogin form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  background-color: #600B2E;
+  padding: 50px;
+  border-radius: 40px
+}
+.OverlayLogin form input{
+  margin-bottom:20px;
+  width: 100%;
+  background-color: #4E0250;
+  border: none;
+  height: 27px;
+  border-radius: 20px;
+  color: #F3EFF5;
 }

@@ -3,22 +3,28 @@ import Youtube from 'react-youtube'
 
 import io from 'socket.io-client';
 
-var socket = io.connect('http://localhost:8000');
+var socket;
 
-console.log(socket)
 class YouTube extends Component {
 
-  state = {
-    status:true,
-    room: null,
-    opts: {
-      playerVars: {
-        modestbranding: 1,
-        autoplay: 1
+  constructor(props) {
+    super(props);
+    this.state = {
+      status:true,
+      room: this.props.room,
+      opts: {
+        playerVars: {
+          modestbranding: 1,
+          autoplay: 1
+        }
       }
     }
+    console.log(this.props.room)
+    socket = props.socket;
+    console.log(socket);
   }
-  socket = null;
+  
+  socket = null
   
 
   getRoom = () => {
@@ -46,9 +52,11 @@ class YouTube extends Component {
   }
 
   componentDidMount() {
+    console.log("mount")
     socket.on('connect', async (socket) => {
       const res = await fetch('http://localhost:8000/rooms')
       const { payload } = await res.json()
+        console.log(payload);
       this.setState({ room: payload[0] })
 
       this.socket = socket
@@ -111,7 +119,7 @@ class YouTube extends Component {
     const { opts, room } = this.state
 
     return (
-      <div className="App">
+      <div className="Youtube">
         {room && room.currentVideo &&(
           <Youtube
             videoId={room.currentVideo.id}

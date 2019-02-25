@@ -35,13 +35,15 @@ class Signinform extends Component {
       name: this.state.name,
     })
     })
-    console.log(res)
+    if(res.status===201)
+    {
+      this.props.onLogin();
+    }
     
   }
 
 render(){
   return(
-    <div>
       <form onSubmit={this.handleSubmit}>
         <label>
         Name:<input type="text" value={this.state.name} name= "name" onChange={this.handleChangeName}/>
@@ -51,7 +53,6 @@ render(){
         </label>
         <input type="submit" value="Sumbit"/>
       </form>
-    </div>
     )
 
 }

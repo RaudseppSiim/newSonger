@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import io from 'socket.io-client';
 
-var socket = io.connect('http://localhost:8000');
+var socket;
 
 class ChatForm extends Component {
 
@@ -12,8 +12,12 @@ class ChatForm extends Component {
     this.state = {
       message:"",
       messages:["Tere","Mina","Olen","Siim"]
-    }; 
+    };
+    socket = props.socket;
+    console.log(socket); 
   }
+  
+  
 
   getSocket = () => {
     return new Promise(resolve => {
@@ -28,10 +32,6 @@ class ChatForm extends Component {
   }
 
   componentDidMount() {
-    socket.on('connect', async (socket) => {
-      this.socket = socket
-      console.log('Socket connected')
-    })
     socket.on('receive', async (socket)=>{
       console.log(socket)
       this.setState({

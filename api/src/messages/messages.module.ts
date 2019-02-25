@@ -7,7 +7,7 @@ import { RoomsModule } from 'src/rooms/rooms.module';
 @Module({
     imports: [RoomsModule],
     controllers: [MessagesController],
-    providers: [MessagesService, MessagesGateway],
+    providers: [MessagesService],
     exports: [MessagesService]
 })
 export class MessagesModule { }

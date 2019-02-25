@@ -29,7 +29,7 @@ render(){
   return(
     <div>
       {this.state.start==false && <FrontPage onStart={this.handleStart}></FrontPage>}
-      {this.state.start==true && <Secondpage></Secondpage>}
+      {this.state.start==true && <Secondpage mode={this.state.startMode}></Secondpage>}
     </div>
     )
 

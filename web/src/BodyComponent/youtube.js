@@ -11,11 +11,13 @@ class YouTube extends Component {
     super(props);
     this.state = {
       status:true,
-      room: this.props.room,
+      room:null,
       opts: {
+        width:1050,
+        height:600,
         playerVars: {
           modestbranding: 1,
-          autoplay: 1
+          autoplay: 0
         }
       }
     }
@@ -51,6 +53,11 @@ class YouTube extends Component {
     })
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps.room[0])
+    this.setState({ room: nextProps.room })
+  }
+
   componentDidMount() {
     console.log("mount")
     socket.on('connect', async (socket) => {
@@ -78,7 +85,7 @@ class YouTube extends Component {
           this.event.target.playVideo();
       }, 1000);
       console.log('next')
-      await this.event.target.cueVideoById(this.state.room.currentVideo.id,0,"default");
+      await this.event.target.loadVideoById(this.state.room.currentVideo.id,0,"default");
      
     })
     socket.on('seek', async (socket) => {

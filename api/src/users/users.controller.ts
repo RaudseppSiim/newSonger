@@ -27,6 +27,17 @@ export class UsersController {
         }
     }
 
+    @Get('/room/:RoomId')
+    getUserInRoom(@Param('RoomId') RoomId: string): Response<User[]> {
+        const users = this.users.getUsersInRoom(RoomId)
+        console.log("hello"+users)
+        if (users) {
+            return { payload: users }
+        } else {
+            throw new HttpException('Not Found', HttpStatus.NOT_FOUND)
+        }
+    }
+
     @Post('/:roomId/create')
     createUser(@Param('roomId') roomId:string,@Body() data: { name: string}): Response<User> {
         console.log(data)

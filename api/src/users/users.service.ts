@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import User from '../models/users.model'
-import { each, random, map } from 'lodash'
+import { each, random, map, find } from 'lodash'
 import Room from 'src/models/room.model';
+import { finished } from 'stream';
 
 @Injectable()
 export class UsersService {
@@ -28,6 +29,11 @@ export class UsersService {
         }        
         this.users.set(user.id,user)
         return user
+    }
+
+    getUsersInRoom(roomId:string):User[] {
+        var users = [...this.users.values()];
+        return users.filter(user => user.room === roomId)
     }
 
 }

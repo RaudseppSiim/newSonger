@@ -15,13 +15,15 @@ class Secondpage extends Component {
     super(props);
     this.state = {
       login:false,
-      room:null
+      room:null,
+      user:""
     };
   }
   socket=null;
 
   componentDidMount() {
     console.log("mount")
+    console.log(socket)
     socket.on('connection', async (socket) => {
       
 
@@ -30,11 +32,17 @@ class Secondpage extends Component {
       
     })
   }
-loginSuccess = async () => {
+loginSuccess = async (name) => {
   const res = await fetch('http://localhost:8000/rooms')
       const { payload } = await res.json()
         console.log(payload);
-      this.setState({ room: payload[0],  login:true })
+      this.setState({ room: payload[0],  login:true, user:name })
+      if(this.props.mode=="Join"){
+
+      }
+      if(this.props.mode=="Create"){
+        
+      }
 
 }
 
@@ -50,8 +58,8 @@ render(){
         <Signinform onLogin={this.loginSuccess}></Signinform>
       </div>}
       <div className="main-container">
-        <ChatForm socket={socket}></ChatForm>
-        <YouTube room = {this.state.room} socket={socket}></YouTube>
+        <ChatForm user = {this.state.user} socket={socket}></ChatForm>
+        <YouTube room = {this.state.room} user = {this.state.user} socket={socket}></YouTube>
       </div>
     </div>
     )

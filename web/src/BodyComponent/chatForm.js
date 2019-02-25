@@ -11,7 +11,10 @@ class ChatForm extends Component {
     super(props);
     this.state = {
       message:"",
-      messages:["Tere","Mina","Olen","Siim"]
+      messages:[{message:"Tere",sender:"Tom"},
+      {message:"Mina",sender:"Tom"},
+      {message:"Olen",sender:"John"},
+      {message:"Siim",sender:"John"}]
     };
     socket = props.socket;
     console.log(socket); 
@@ -34,19 +37,21 @@ class ChatForm extends Component {
   componentDidMount() {
     socket.on('receive', async (socket)=>{
       console.log(socket)
+      if(socket.sender!==this.props.user){
       this.setState({
         message:"",
-        messages:[...this.state.messages,socket.message]})
+        messages:[...this.state.messages,{message:socket.message,sender:socket.sender}]})
+      }
     })
   }
 
 
 handleSubmit = (event) => {
   event.preventDefault();
-  socket.emit('send',this.state.message,"35b")
+  socket.emit('send',this.state.message,"35b",this.props.user)
   this.setState({
     message:"",
-    messages:[...this.state.messages,this.state.message]})
+    messages:[...this.state.messages,{message:this.state.message,sender:this.props.user}]})
 }
 
 MessageValueChange = (event) =>{
@@ -59,12 +64,19 @@ clickHandle = () =>{
 
 render(){
   return(
-    <div>
+    <div className="chatElement">
       <div className="chat-area" id="chat-area" >
       {this.state.messages.map((answer, i) => {     
-           console.log("Entered");                 
-           // Return the element. Also pass key     
-           return (<p className="message" key={i}>{answer}</p>) 
+           console.log(answer);
+           console.log(this.props.user);                
+
+           // Return the element. Also pass key
+           if (answer.sender === this.props.user){    
+           return (<p className="message self" key={i}><span className="sender-self">{answer.sender}</span>{answer.message}</p>) 
+          }
+          else{    
+            return (<p className="message" key={i}><span className="sender">{answer.sender}</span>{answer.message}</p>) 
+           }
         })}
       </div>
         <form className="chat-form" onSubmit={this.handleSubmit}>

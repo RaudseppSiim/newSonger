@@ -2,7 +2,7 @@ import User from './users.model'
 
 export default interface Message {
     id:string,
-    sender: User;
+    sender: string;
     roomId: string;
     message: string;
     time: number;

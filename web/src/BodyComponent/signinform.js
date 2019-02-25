@@ -10,11 +10,13 @@ class Signinform extends Component {
     super(props);
     this.state = {
       name: "",
-      roomId: ""
+      roomId: "",
+      youtubeSong:""
     };
 
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeRoomId = this.handleChangeRoomId.bind(this);
+    this.handleChangeYoutubeSong = this.handleChangeYoutubeSong.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChangeName = (event) =>{
@@ -22,6 +24,9 @@ class Signinform extends Component {
   }
   handleChangeRoomId = (event) =>{
     this.setState({roomId: event.target.value});
+  }
+  handleChangeYoutubeSong = (event) =>{
+    this.setState({youtubeSong: event.target.value});
   }
   handleSubmit = async (event) =>{
     event.preventDefault();
@@ -37,7 +42,7 @@ class Signinform extends Component {
     })
     if(res.status===201)
     {
-      this.props.onLogin();
+      this.props.onLogin(this.state.name);
     }
     
   }
@@ -50,6 +55,9 @@ render(){
         </label>
         <label>
         RoomId:<input type="text" value={this.state.roomId} name= "roomId"onChange={this.handleChangeRoomId}/>
+        </label>
+        <label>
+        Youtube song:<input type="text" value={this.state.youtubeSong} name= "roomId" onChange={this.handleChangeYoutubeSong}/>
         </label>
         <input type="submit" value="Sumbit"/>
       </form>

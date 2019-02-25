@@ -18,7 +18,7 @@ export class MessagesGateway {
     @SubscribeMessage('send')
     onSendMessage(client: any, data: any){
         console.log(data)
-        const message = this.messages.createMessage(data[0],data[1])
+        const message = this.messages.createMessage(data[0],data[1],data[2])
 
         if(message) {
             return this.broadcastChannel('receive', message)

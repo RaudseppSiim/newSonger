@@ -26,11 +26,11 @@ export class MessagesService {
 
     }
 
-    createMessage(messageText: string, roomId: string): Message {
+    createMessage(messageText: string, roomId: string,sender: string): Message {
         
         const message: Message = {
             id: random(0, 1024 ^ 2).toString(16),
-            sender:null,
+            sender:sender,
             roomId: roomId,
             message: messageText,
             time: Date.now(),

@@ -67,7 +67,7 @@ code {
 }
 
 .chat-form{
-  background-color: #111111;
+  background-color: #262626;
   border: 1px solid #0A0A0A;
   border-radius: 25px;
   height: 30px;
@@ -79,7 +79,7 @@ code {
 .Text-input{
   width: 85%;
   margin-right: 10%;
-  background-color: #111111;
+  background-color: #262626;
   text-align: right;
   border: none;
   color: #F3EFF5;
@@ -87,7 +87,7 @@ code {
   padding:  0 8px 0 0;
 }
 .message{
-  background-color: #111111;
+  background-color: #262626;
   border: 1px solid #0A0A0A;
   border-radius: 25px;
   /* height: 30px; */

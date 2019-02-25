@@ -16,7 +16,7 @@ clickHandleCreate = () =>{
   this.props.onStart("Create");
 }
 
-clickHandleCreate = () =>{
+clickHandleJoin = () =>{
   this.props.onStart("Join");
 }
 

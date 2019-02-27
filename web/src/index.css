@@ -72,7 +72,7 @@ code {
   border: 1px solid #0A0A0A;
   border-radius: 25px;
   height: 30px;
-  width: 90%;
+  width: 95%;
   display: flex;
   justify-content: flex-end;
 }
@@ -143,6 +143,7 @@ code {
 .chatElement{
   width: 100%;
   text-align: right;
+  margin-left: 30px;
 }
 
 /* width */
@@ -179,4 +180,44 @@ code {
 .sender-self{
   margin-left: 18px;
   font-size: 12px;
+}
+
+.header{
+
+  display: flex;
+  margin: 0px 50px;
+  justify-content: space-between;
+  
+}
+
+.header .info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.info h4,.info h5{
+   margin: 6px 0
+}
+.joined-user{
+  width: 23.6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    height: 9vh;
+    background-color: #4E0250;
+    border-radius: 25px;
+    margin-top: 30px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.joined-user:hover{
+  background-color: #39023B;
+
+}
+.playerList{
+  display: flex;
+  flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
 }

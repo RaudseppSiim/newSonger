@@ -19,9 +19,10 @@ class App extends Component {
     };
   }
   handleStart = (startMode) => {
+    console.log(startMode)
     this.setState({
-      start:true,
-      mode:startMode
+      mode:startMode,
+      start:true
     })
   }
 
@@ -29,7 +30,7 @@ render(){
   return(
     <div>
       {this.state.start==false && <FrontPage onStart={this.handleStart}></FrontPage>}
-      {this.state.start==true && <Secondpage mode={this.state.startMode}></Secondpage>}
+      {this.state.start==true && <Secondpage mode={this.state.mode}></Secondpage>}
     </div>
     )
 

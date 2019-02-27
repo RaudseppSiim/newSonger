@@ -25,6 +25,10 @@ export class MessagesGateway {
         }
         return {success: false}
     }
+    @SubscribeMessage('joined')
+    sendOutPlayerRefres(){
+        return this.broadcastChannel('players',null)
+    }
 
     broadcastChannel(channel: String, message: any) {
         this.server.emit(channel, message);

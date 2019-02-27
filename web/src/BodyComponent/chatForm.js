@@ -11,10 +11,7 @@ class ChatForm extends Component {
     super(props);
     this.state = {
       message:"",
-      messages:[{message:"Tere",sender:"Tom"},
-      {message:"Mina",sender:"Tom"},
-      {message:"Olen",sender:"John"},
-      {message:"Siim",sender:"John"}]
+      messages:[]
     };
     socket = props.socket;
     console.log(socket); 
@@ -37,7 +34,7 @@ class ChatForm extends Component {
   componentDidMount() {
     socket.on('receive', async (socket)=>{
       console.log(socket)
-      if(socket.sender!==this.props.user){
+      if(socket.sender!==this.props.user&&socket.roomId===this.props.room.id){
       this.setState({
         message:"",
         messages:[...this.state.messages,{message:socket.message,sender:socket.sender}]})
@@ -48,7 +45,7 @@ class ChatForm extends Component {
 
 handleSubmit = (event) => {
   event.preventDefault();
-  socket.emit('send',this.state.message,"35b",this.props.user)
+  socket.emit('send',this.state.message,this.props.room.id,this.props.user)
   this.setState({
     message:"",
     messages:[...this.state.messages,{message:this.state.message,sender:this.props.user}]})

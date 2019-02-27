@@ -54,12 +54,13 @@ class YouTube extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(nextProps.room[0])
+    console.log(nextProps.room)
     this.setState({ room: nextProps.room })
   }
 
   componentDidMount() {
     console.log("mount")
+    this.setState({ room: this.props.room })
     socket.on('connect', async (socket) => {
       const res = await fetch('http://localhost:8000/rooms')
       const { payload } = await res.json()

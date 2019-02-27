@@ -30,20 +30,7 @@ class Signinform extends Component {
   }
   handleSubmit = async (event) =>{
     event.preventDefault();
-    const res = await fetch('http://localhost:8000/users/'+this.state.roomId+'/create', {
-      method: 'POST',
-      headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      },
-    body: JSON.stringify({
-      name: this.state.name,
-    })
-    })
-    if(res.status===201)
-    {
-      this.props.onLogin(this.state.name);
-    }
+      this.props.onLogin(this.state.name,this.state.youtubeSong,this.state.roomId);
     
   }
 
@@ -53,9 +40,10 @@ render(){
         <label>
         Name:<input type="text" value={this.state.name} name= "name" onChange={this.handleChangeName}/>
         </label>
+        {this.props.mode==="Join" &&
         <label>
         RoomId:<input type="text" value={this.state.roomId} name= "roomId"onChange={this.handleChangeRoomId}/>
-        </label>
+        </label>}
         <label>
         Youtube song:<input type="text" value={this.state.youtubeSong} name= "roomId" onChange={this.handleChangeYoutubeSong}/>
         </label>

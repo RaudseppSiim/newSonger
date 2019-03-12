@@ -12,6 +12,7 @@ class YouTube extends Component {
     this.state = {
       status:true,
       room:null,
+      currentVideo:null,
       opts: {
         width:1050,
         height:600,
@@ -55,12 +56,12 @@ class YouTube extends Component {
 
   componentWillReceiveProps(nextProps){
     console.log(nextProps.room)
-    this.setState({ room: nextProps.room })
+    this.setState({ room: nextProps.room, currentVideo: nextProps.room.currentVideo.id })
   }
 
   componentDidMount() {
     console.log("mount")
-    this.setState({ room: this.props.room })
+    this.setState({ room: this.props.room, currentVideo: this.props.room.currentVideo.id })
     socket.on('connect', async (socket) => {
       const res = await fetch('http://localhost:8000/rooms')
       const { payload } = await res.json()
@@ -81,12 +82,15 @@ class YouTube extends Component {
       this.event.target.playVideo();
     })
     socket.on('next', async (socket) => {
-      let i = setInterval(() => {
-          clearInterval(i)
-          this.event.target.playVideo();
-      }, 1000);
+      // let i = setInterval(() => {
+      //     clearInterval(i)
+          
+      // }, 1000);
       console.log('next')
-      await this.event.target.loadVideoById(this.state.room.currentVideo.id,0,"default");
+      console.log(socket)
+      console.log(this.state.room.currentVideo.id)
+      await this.setState({currentVideo: socket.currentVideo.id})
+      this.event.target.playVideo();
      
     })
     socket.on('seek', async (socket) => {
@@ -124,19 +128,21 @@ class YouTube extends Component {
   }
 
   render() {
-    const { opts, room } = this.state
+    const { opts, room, currentVideo } = this.state
+    console.log(currentVideo)
+    const youtubey = <Youtube
+      videoId={currentVideo}
+      onReady={this.onReady}
+      opts={opts}
+      onPlay={this.startVideo}
+      onPause={this.pauseVideo}
+      onEnd={this.next}
+    /> 
 
     return (
       <div className="Youtube">
         {room && room.currentVideo &&(
-          <Youtube
-            videoId={room.currentVideo.id}
-            onReady={this.onReady}
-            opts={opts}
-            onPlay={this.startVideo}
-            onPause={this.pauseVideo}
-            onEnd={this.next}
-          />
+          youtubey
         )}
       </div>
     );

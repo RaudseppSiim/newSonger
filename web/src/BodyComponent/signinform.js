@@ -30,7 +30,14 @@ class Signinform extends Component {
   }
   handleSubmit = async (event) =>{
     event.preventDefault();
-      this.props.onLogin(this.state.name,this.state.youtubeSong,this.state.roomId);
+    var youtubeId
+     if(this.state.youtubeSong.includes("youtube") || this.state.youtubeSong.includes("youtu.be"))
+     {
+      youtubeId = this.state.youtubeSong.substring(this.state.youtubeSong.length-11)
+     } else {
+      youtubeId = this.state.youtubeSong
+     }
+      this.props.onLogin(this.state.name,youtubeId,this.state.roomId);
     
   }
 

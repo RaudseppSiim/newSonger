@@ -28,7 +28,7 @@ export class VideosController {
     }
 
     @Get('/:roomId/videos/:videoId')
-    getRoom(@Param('roomId') roomId: string, @Param('videoId') videoId: string): Response<Video> {
+    getVideo(@Param('roomId') roomId: string, @Param('videoId') videoId: string): Response<Video> {
         const room = this.rooms.getRoom(roomId)
 
         if (!room) {
